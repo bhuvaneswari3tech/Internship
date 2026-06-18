@@ -7,52 +7,68 @@ import InternRegistration from "./components/InternRegistration";
 import InternAllocation from "./components/internAllocation";
 import InternDashboard from "./components/InternDashboard";
 import StudentList from "./components/StudentList";
+import Interns from "./components/Interns";
 import StatusPage from "./components/StatusPage";
 import CompletionPage from "./components/CompletionPage";
+import UpdateStudent from "./components/UpdateStudent";
 
 function App() {
   return (
     <BrowserRouter>
-
-      {/* Header */}
       <Header />
 
-      {/* Main Content */}
       <main className="min-h-screen">
         <Routes>
 
+          {/* Home */}
           <Route
             path="/"
             element={<InternRegistration />}
           />
 
-          {/* Register page */}
+          {/* Register */}
           <Route
-            path="/"
+            path="/register"
             element={<InternRegistration />}
           />
 
+          {/* Allocation */}
           <Route
             path="/allocation"
             element={<InternAllocation />}
           />
 
+          {/* Dashboard */}
           <Route
             path="/dashboard"
             element={<InternDashboard />}
           />
 
+          {/* Students */}
           <Route
             path="/students"
             element={<StudentList />}
           />
 
-          
+          {/* Interns */}
+          <Route
+            path="/interns"
+            element={<Interns />}
+          />
+
+          {/* Status */}
           <Route
             path="/status"
             element={<StatusPage />}
           />
 
+          {/* Update Student */}
+          <Route
+            path="/update"
+            element={<UpdateStudent />}
+          />
+
+          {/* Completed */}
           <Route
             path="/completed"
             element={<CompletionPage />}
@@ -61,9 +77,7 @@ function App() {
         </Routes>
       </main>
 
-      {/* Footer */}
       <Footer />
-
     </BrowserRouter>
   );
 }

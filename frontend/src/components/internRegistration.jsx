@@ -1,16 +1,36 @@
-
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import handleSubmit from "../handlers/handleSubmit";
 import logo from "../assets/arinfotek_logo.png";
 import "./InternRegistration.css";
 
 function InternRegistration() {
   const navigate = useNavigate();
 
+  const [fullName, setFullName] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [collegeName, setCollegeName] = useState("");
+  const [branch, setBranch] = useState("");
+  const [year, setYear] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    navigate("/allocation", {
+      state: {
+        fullName,
+        email,
+        contactNumber,
+        collegeName,
+        branch,
+        year,
+      },
+    });
+  };
+
   return (
     <div className="page">
 
-      {/* AR INFOTEK HEADER */}
       <div className="portal-header">
         <img
           src={logo}
@@ -20,16 +40,14 @@ function InternRegistration() {
 
         <div className="portal-title">
           <h1>AR Infotek Internship Portal</h1>
-          
         </div>
       </div>
 
-      {/* FORM SECTION */}
       <div className="form-section">
 
         <form
           className="intern-form"
-          onSubmit={(e) => handleSubmit(e, navigate)}
+          onSubmit={handleSubmit}
         >
 
           <div className="row">
@@ -38,6 +56,10 @@ function InternRegistration() {
               <input
                 type="text"
                 placeholder="Use only letters and spaces"
+                value={fullName}
+                onChange={(e) =>
+                  setFullName(e.target.value)
+                }
                 required
               />
             </div>
@@ -53,10 +75,12 @@ function InternRegistration() {
 
           <div className="form-group">
             <label>Gender *</label>
+
             <select required>
               <option value="">
                 Choose your gender
               </option>
+
               <option>Male</option>
               <option>Female</option>
               <option>Other</option>
@@ -64,26 +88,35 @@ function InternRegistration() {
           </div>
 
           <div className="row">
+
             <div className="form-group">
               <label>Contact Number *</label>
+
               <input
                 type="text"
                 placeholder="10 digit mobile number"
+                value={contactNumber}
+                onChange={(e) =>
+                  setContactNumber(e.target.value)
+                }
                 required
               />
             </div>
 
             <div className="form-group">
               <label>Alternate Number</label>
+
               <input
                 type="text"
                 placeholder="10 digit mobile number"
               />
             </div>
+
           </div>
 
           <div className="form-group">
             <label>Home Address *</label>
+
             <textarea
               rows="4"
               placeholder="Enter your full home address"
@@ -93,19 +126,26 @@ function InternRegistration() {
 
           <div className="form-group">
             <label>College Name *</label>
+
             <input
               type="text"
               placeholder="Enter your college name"
+              value={collegeName}
+              onChange={(e) =>
+                setCollegeName(e.target.value)
+              }
               required
             />
           </div>
 
           <div className="form-group">
             <label>Degree *</label>
+
             <select required>
               <option value="">
                 Select your degree
               </option>
+
               <option>B.E</option>
               <option>B.Tech</option>
               <option>BCA</option>
@@ -117,10 +157,18 @@ function InternRegistration() {
 
           <div className="form-group">
             <label>Branch *</label>
-            <select required>
+
+            <select
+              value={branch}
+              onChange={(e) =>
+                setBranch(e.target.value)
+              }
+              required
+            >
               <option value="">
                 Select your branch
               </option>
+
               <option>Computer Science</option>
               <option>Information Technology</option>
               <option>Electronics</option>
@@ -130,12 +178,21 @@ function InternRegistration() {
           </div>
 
           <div className="row">
+
             <div className="form-group">
               <label>Year *</label>
-              <select required>
+
+              <select
+                value={year}
+                onChange={(e) =>
+                  setYear(e.target.value)
+                }
+                required
+              >
                 <option value="">
                   Select Year
                 </option>
+
                 <option>1st Year</option>
                 <option>2nd Year</option>
                 <option>3rd Year</option>
@@ -145,10 +202,12 @@ function InternRegistration() {
 
             <div className="form-group">
               <label>Semester *</label>
+
               <select required>
                 <option value="">
                   Select Semester
                 </option>
+
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -159,6 +218,7 @@ function InternRegistration() {
                 <option>8</option>
               </select>
             </div>
+
           </div>
 
           <div className="form-group">
@@ -179,6 +239,10 @@ function InternRegistration() {
             <input
               type="email"
               placeholder="Enter your email address"
+              value={email}
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
               required
             />
           </div>
@@ -191,10 +255,11 @@ function InternRegistration() {
           </button>
 
         </form>
+
       </div>
+
     </div>
   );
 }
 
 export default InternRegistration;
-

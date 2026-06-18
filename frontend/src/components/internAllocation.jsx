@@ -1,48 +1,48 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import "./internAllocation.css";
-import internData from "../data/internData";
 
 function Allocation() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const student = {
-    fullName: internData.intern.name,
-    email: internData.intern.email,
-    contactNumber: "8050793405",
-    collegeName: "Adhiyamaan College",
-    branch: "Computer Science",
-    year: "3rd Year",
+  // Get student data from Registration Page
+  const student = location.state || {
+    fullName: "No Student",
+    email: "",
+    contactNumber: "",
+    collegeName: "",
+    branch: "",
+    year: "",
   };
 
-  const [domain, setDomain] = useState(
-    internData.intern.domain
-  );
-
+  const [domain, setDomain] = useState("Cloud Computing");
   const [allocated, setAllocated] = useState(false);
 
- const handleAllocation = async () => {
-  const result = await Swal.fire({
-    icon: "success",
-    title: "Internship Allocated",
-    text: `${domain} Internship Allocated Successfully`,
-    confirmButtonColor: "#ff6200",
-    confirmButtonText: "OK",
-    allowOutsideClick: false,
-    allowEscapeKey: false,
-  });
+  const handleAllocation = async () => {
+    const result = await Swal.fire({
+      icon: "success",
+      title: "Internship Allocated",
+      text: `${domain} Internship Allocated Successfully`,
+      confirmButtonColor: "#ff6200",
+      confirmButtonText: "OK",
+    });
 
-  if (result.isConfirmed) {
-    setAllocated(true);
+    if (result.isConfirmed) {
+      setAllocated(true);
 
-    navigate("/dashboard");
-  }
-};
+      navigate("/status", {
+        state: {
+          student,
+          domain,
+        },
+      });
+    }
+  };
 
   return (
     <div className="allocation-container">
-
       <div className="allocation-header">
         <h1>AR Infotek Internship Portal</h1>
         <p>Intern Management and Allocation</p>
@@ -56,7 +56,6 @@ function Allocation() {
         <h2>Student Information</h2>
 
         <div className="info-grid">
-
           <div className="info-item">
             <span>Name</span>
             <strong>{student.fullName}</strong>
@@ -86,16 +85,11 @@ function Allocation() {
             <span>Year</span>
             <strong>{student.year}</strong>
           </div>
-
         </div>
       </div>
 
       <div className="allocation-form">
         <h2>Internship Domain Allocation</h2>
-
-        <p className="allocation-subtitle">
-          Select a domain for internship assignment
-        </p>
 
         <select
           value={domain}
@@ -134,7 +128,6 @@ function Allocation() {
           </div>
         )}
       </div>
-
     </div>
   );
 }

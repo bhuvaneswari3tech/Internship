@@ -17,10 +17,8 @@ function Header() {
         {/* Navigation */}
         <nav className="flex items-center gap-6 font-semibold text-gray-700">
 
-         
-
           <Link
-            to="/"
+            to="/register"
             className="hover:text-blue-700 transition"
           >
             Register
@@ -34,15 +32,6 @@ function Header() {
           </Link>
 
           <Link
-            to="/dashboard"
-            className="hover:text-blue-700 transition"
-          >
-            Dashboard
-          </Link>
-
-          
-
-          <Link
             to="/status"
             className="hover:text-blue-700 transition"
           >
@@ -50,10 +39,17 @@ function Header() {
           </Link>
 
           <Link
-            to="/students"
+            to="/interns"
             className="hover:text-blue-700 transition"
           >
             Interns
+          </Link>
+
+          <Link
+            to="/completed"
+            className="hover:text-blue-700 transition"
+          >
+            Completed
           </Link>
 
         </nav>

@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./studentList.css";
 
-function StudentList() {
+function Interns() {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
 
   const students = [
     {
@@ -60,29 +58,16 @@ function StudentList() {
     });
   };
 
-  const filteredStudents = students.filter((student) =>
-    student.full_name.toLowerCase().includes(search.toLowerCase())
-  );
-
   return (
     <div className="student-page">
       <div className="top-banner">
-        <h1>AR Infotek</h1>
-        <p>Intern Management System</p>
+        <h1>AR Infotek Internship Portal</h1>
+        <p>Intern Details</p>
       </div>
 
       <div className="summary-card">
         <h2>Total Interns</h2>
         <span>{students.length}</span>
-      </div>
-
-      <div className="search-box">
-        <input
-          type="text"
-          placeholder="Search Intern..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
       </div>
 
       <div className="table-card">
@@ -100,7 +85,7 @@ function StudentList() {
           </thead>
 
           <tbody>
-            {filteredStudents.map((student) => (
+            {students.map((student) => (
               <tr key={student.intern_id}>
                 <td>{student.intern_id}</td>
                 <td>{student.full_name}</td>
@@ -108,7 +93,6 @@ function StudentList() {
                 <td>{student.college_name}</td>
                 <td>{student.degree}</td>
                 <td>{student.branch}</td>
-
                 <td>
                   <button
                     className="status"
@@ -126,4 +110,4 @@ function StudentList() {
   );
 }
 
-export default StudentList;
+export default Interns;
