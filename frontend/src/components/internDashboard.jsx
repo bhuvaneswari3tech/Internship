@@ -2,20 +2,14 @@ import { useLocation } from "react-router-dom";
 import "./internDashboard.css";
 import internData from "../data/internData";
 
+
 function InternDashboard() {
   const location = useLocation();
 
   const selectedIntern = location.state;
 
-  const intern = selectedIntern
-    ? {
-        name: selectedIntern.full_name,
-        email: selectedIntern.email,
-        domain: selectedIntern.domain || "Frontend Development",
-        status: selectedIntern.status || "Active",
-      }
-    : internData.intern;
-
+  const intern = selectedIntern || {};
+    
   const tasks = internData.tasks;
 
   const tasksAssigned = tasks.length;
@@ -71,23 +65,30 @@ function InternDashboard() {
 
         <div className="details-grid">
 
-          <p>
-            <strong>Name:</strong> {intern.name}
-          </p>
+       <p>
+  <strong>Name:</strong> {intern?.fullName}
+</p>
 
-          <p>
-            <strong>Email:</strong> {intern.email}
-          </p>
+<p>
+  <strong>Email:</strong> {intern?.email}
+</p>
 
-          <p>
-            <strong>Domain:</strong> {intern.domain}
-          </p>
+<p>
+  <strong>Domain:</strong> {intern?.domain}
+</p>
 
-          <p>
-            <strong>Status:</strong> {intern.status}
-          </p>
+<p>
+  <strong>Status:</strong> {intern?.status}
+</p>
 
-        </div>
+<p>
+  <strong>College:</strong> {intern?.college_name}
+</p>
+
+<p>
+  <strong>Branch:</strong> {intern?.branch}
+</p>   
+</div>
       </div>
 
       <div className="dashboard-card">

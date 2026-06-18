@@ -5,12 +5,9 @@ box-sizing:border-box;
 font-family:"Segoe UI",sans-serif;
 }
 
-/* DO NOT CHANGE BODY */
 body{
 background:#f4f7fc;
 }
-
-/* MAIN */
 
 .status-container{
 max-width:1200px;
@@ -18,8 +15,6 @@ margin:auto;
 padding:40px 20px;
 min-height:100vh;
 }
-
-/* HEADER */
 
 .status-header{
 text-align:center;
@@ -30,18 +25,13 @@ margin-bottom:40px;
 font-size:48px;
 font-weight:800;
 color:#1e5aa8 !important;
-opacity:1 !important;
-text-shadow:none !important;
 margin-bottom:10px;
 }
 
 .status-header p{
 font-size:20px;
 color:#475569 !important;
-opacity:1 !important;
 }
-
-/* OVERVIEW */
 
 .overview-card{
 display:grid;
@@ -74,8 +64,6 @@ font-weight:800;
 color:#ff6200;
 }
 
-/* CARD */
-
 .status-card{
 background:white;
 padding:30px;
@@ -88,8 +76,6 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);
 color:#1e5aa8;
 margin-bottom:20px;
 }
-
-/* TABLE */
 
 .status-table{
 width:100%;
@@ -105,13 +91,10 @@ padding:15px;
 .status-table td{
 padding:15px;
 border-bottom:1px solid #eee;
+text-align:center;
 }
 
-.status-table tr:hover{
-background:#f8fafc;
-}
-
-/* BADGES */
+.status-table tr:hover
 
 .badge{
 padding:8px 14px;
@@ -135,8 +118,6 @@ background:#fef3c7;
 color:#d97706;
 }
 
-/* TABLE PROGRESS */
-
 .table-progress{
 width:100%;
 height:10px;
@@ -154,8 +135,6 @@ background:linear-gradient(
 #ff6200
 );
 }
-
-/* OVERALL PROGRESS */
 
 .overall-progress{
 width:100%;
@@ -181,8 +160,6 @@ font-weight:700;
 color:#1e5aa8;
 }
 
-/* BUTTON */
-
 .finish-btn{
 width:100%;
 height:70px;
@@ -206,7 +183,23 @@ transform:translateY(-3px);
 box-shadow:0 15px 35px rgba(255,98,0,.45);
 }
 
-/* MOBILE */
+/* INTERN NAME BUTTON */
+
+.intern-btn{
+background:#1e5aa8;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.intern-btn:hover{
+background:#15407a;
+transform:scale(1.05);
+}
 
 @media(max-width:768px){
 
@@ -222,4 +215,17 @@ overflow-x:auto;
 .status-header h1{
 font-size:32px;
 }
+}
+.update-btn {
+  background: #ff6200;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.update-btn:hover {
+  background: #e65100;
 }

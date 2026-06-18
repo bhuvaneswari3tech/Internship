@@ -9,6 +9,7 @@ import InternDashboard from "./components/InternDashboard";
 import StudentList from "./components/StudentList";
 import StatusPage from "./components/StatusPage";
 import CompletionPage from "./components/CompletionPage";
+import TaskUpdate from "./components/TaskUpdate";
 
 function App() {
   return (
@@ -57,6 +58,10 @@ function App() {
             path="/completed"
             element={<CompletionPage />}
           />
+          <Route
+  path="/task-update"
+  element={<TaskUpdate />}
+/>
 
         </Routes>
       </main>

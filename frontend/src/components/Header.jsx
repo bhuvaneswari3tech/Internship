@@ -33,13 +33,7 @@ function Header() {
             Allocation
           </Link>
 
-          <Link
-            to="/dashboard"
-            className="hover:text-blue-700 transition"
-          >
-            Dashboard
-          </Link>
-
+         
           
 
           <Link
