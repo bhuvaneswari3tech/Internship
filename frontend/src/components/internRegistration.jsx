@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
+=======
+import { useState } from "react";
+import handleSubmit from "../handlers/handleSubmit";
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
 import logo from "../assets/arinfotek_logo.png";
 import "./InternRegistration.css";
 
 function InternRegistration() {
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const [fullName, setFullName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [collegeName, setCollegeName] = useState("");
@@ -27,6 +33,17 @@ function InternRegistration() {
       },
     });
   };
+=======
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+     contactNumber: "",
+  collegeName: "",
+  degree:"",
+  branch: "",
+  year: "",
+  });
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
 
   return (
     <div className="page">
@@ -47,18 +64,38 @@ function InternRegistration() {
 
         <form
           className="intern-form"
+<<<<<<< HEAD
           onSubmit={handleSubmit}
+=======
+          onSubmit={(e) =>
+            handleSubmit(
+              e,
+              navigate,
+              formData
+            )
+          }
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
         >
 
           <div className="row">
             <div className="form-group">
               <label>Full Name *</label>
+
               <input
                 type="text"
                 placeholder="Use only letters and spaces"
+<<<<<<< HEAD
                 value={fullName}
                 onChange={(e) =>
                   setFullName(e.target.value)
+=======
+                value={formData.fullName}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    fullName: e.target.value,
+                  })
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
                 }
                 required
               />
@@ -66,6 +103,7 @@ function InternRegistration() {
 
             <div className="form-group">
               <label>Date of Birth *</label>
+
               <input
                 type="date"
                 required
@@ -92,6 +130,7 @@ function InternRegistration() {
             <div className="form-group">
               <label>Contact Number *</label>
 
+<<<<<<< HEAD
               <input
                 type="text"
                 placeholder="10 digit mobile number"
@@ -101,6 +140,21 @@ function InternRegistration() {
                 }
                 required
               />
+=======
+              
+              <input
+  type="text"
+  placeholder="10 digit mobile number"
+  value={formData.contactNumber}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      contactNumber: e.target.value,
+    })
+  }
+  required
+/>
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
             </div>
 
             <div className="form-group">
@@ -127,6 +181,7 @@ function InternRegistration() {
           <div className="form-group">
             <label>College Name *</label>
 
+<<<<<<< HEAD
             <input
               type="text"
               placeholder="Enter your college name"
@@ -154,8 +209,51 @@ function InternRegistration() {
               <option>M.Tech</option>
             </select>
           </div>
+=======
+           <input
+  type="text"
+  placeholder="Enter your college name"
+  value={formData.collegeName}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      collegeName: e.target.value,
+    })
+  }
+  required
+/>
+</div>
+
+          
 
           <div className="form-group">
+  <label>Degree *</label>
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
+
+  <select
+    value={formData.degree}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        degree: e.target.value,
+      })
+    }
+    required
+  >
+    <option value="">
+      Select your degree
+    </option>
+
+    <option>B.E</option>
+    <option>B.Tech</option>
+    <option>BCA</option>
+    <option>BSc</option>
+    <option>MCA</option>
+    <option>M.Tech</option>
+  </select>
+</div>
+          <div className="form-group">
+<<<<<<< HEAD
             <label>Branch *</label>
 
             <select
@@ -199,6 +297,57 @@ function InternRegistration() {
                 <option>4th Year</option>
               </select>
             </div>
+=======
+  <label>Branch *</label>
+
+  <select
+    value={formData.branch}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        branch: e.target.value,
+      })
+    }
+    required
+  >
+    <option value="">
+      Select your branch
+    </option>
+
+    <option>Computer Science</option>
+    <option>Information Technology</option>
+    <option>Electronics</option>
+    <option>Mechanical</option>
+    <option>Civil</option>
+  </select>
+</div>
+
+          <div className="row">
+
+           <div className="form-group">
+  <label>Year *</label>
+
+  <select
+    value={formData.year}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        year: e.target.value,
+      })
+    }
+    required
+  >
+    <option value="">
+      Select Year
+    </option>
+
+    <option>1st Year</option>
+    <option>2nd Year</option>
+    <option>3rd Year</option>
+    <option>4th Year</option>
+  </select>
+</div>
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
 
             <div className="form-group">
               <label>Semester *</label>
@@ -239,9 +388,18 @@ function InternRegistration() {
             <input
               type="email"
               placeholder="Enter your email address"
+<<<<<<< HEAD
               value={email}
               onChange={(e) =>
                 setEmail(e.target.value)
+=======
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  email: e.target.value,
+                })
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
               }
               required
             />

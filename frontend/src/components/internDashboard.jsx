@@ -1,17 +1,40 @@
 import { useLocation } from "react-router-dom";
 import "./internDashboard.css";
 
+
 function InternDashboard() {
   const location = useLocation();
 
   const data = location.state || {};
 
+<<<<<<< HEAD
   const currentDate = new Date().toLocaleDateString();
   const currentTime = new Date().toLocaleTimeString();
 
   // Get all saved updates from localStorage
   const overviewHistory =
     JSON.parse(localStorage.getItem("overviewHistory")) || [];
+=======
+  const intern = selectedIntern || {};
+    
+  const tasks = internData.tasks;
+
+  const tasksAssigned = tasks.length;
+
+  const tasksCompleted = tasks.filter(
+    (task) => task.progress === 100
+  ).length;
+
+  const percentage =
+    tasks.length > 0
+      ? Math.round(
+          tasks.reduce(
+            (sum, task) => sum + task.progress,
+            0
+          ) / tasks.length
+        )
+      : 0;
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
 
   return (
     <div className="dashboard-container">
@@ -50,6 +73,7 @@ function InternDashboard() {
         <h2>Student Information</h2>
 
         <div className="details-grid">
+<<<<<<< HEAD
           <p>
             <strong>Name:</strong>{" "}
             {data.fullName || "Bhuvaneswari"}
@@ -80,6 +104,33 @@ function InternDashboard() {
             {data.domain || "Cloud Computing"}
           </p>
         </div>
+=======
+
+       <p>
+  <strong>Name:</strong> {intern?.fullName}
+</p>
+
+<p>
+  <strong>Email:</strong> {intern?.email}
+</p>
+
+<p>
+  <strong>Domain:</strong> {intern?.domain}
+</p>
+
+<p>
+  <strong>Status:</strong> {intern?.status}
+</p>
+
+<p>
+  <strong>College:</strong> {intern?.college_name}
+</p>
+
+<p>
+  <strong>Branch:</strong> {intern?.branch}
+</p>   
+</div>
+>>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
       </div>
 
       {/* Internship Details */}

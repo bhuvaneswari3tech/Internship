@@ -9,7 +9,7 @@ import InternDashboard from "./components/InternDashboard";
 import StudentList from "./components/StudentList";
 import Interns from "./components/Interns";
 import StatusPage from "./components/StatusPage";
-import UpdateStudent from "./components/UpdateStudent";
+import CompletionPage from "./components/CompletionPage";
 
 function App() {
   return (
@@ -47,8 +47,8 @@ function App() {
           />
 
           <Route
-            path="/update"
-            element={<UpdateStudent />}
+            path="/completed"
+            element={<CompletionPage />}
           />
 
           {/* Fallback Route */}
