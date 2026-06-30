@@ -30,13 +30,7 @@ function Header() {
           >
             Allocation
           </Link>
-
-<<<<<<< HEAD
-=======
-         
           
-
->>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
           <Link
             to="/status"
             className="hover:text-blue-700 transition"

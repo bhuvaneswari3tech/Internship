@@ -10,6 +10,7 @@ import StudentList from "./components/StudentList";
 import Interns from "./components/Interns";
 import StatusPage from "./components/StatusPage";
 import CompletionPage from "./components/CompletionPage";
+import UpdateStudent from "./components/UpdateStudent";
 
 function App() {
   return (
@@ -18,40 +19,60 @@ function App() {
 
       <main>
         <Routes>
-          <Route path="/" element={<InternRegistration />} />
-          <Route path="/register" element={<InternRegistration />} />
+          {/* Registration */}
+          <Route
+            path="/"
+            element={<InternRegistration />}
+          />
 
+          <Route
+            path="/register"
+            element={<InternRegistration />}
+          />
+
+          {/* Allocation */}
           <Route
             path="/allocation"
             element={<InternAllocation />}
           />
 
+          {/* Dashboard */}
           <Route
             path="/dashboard"
             element={<InternDashboard />}
           />
 
+          {/* Student List */}
           <Route
             path="/students"
             element={<StudentList />}
           />
 
+          {/* Intern List */}
           <Route
             path="/interns"
             element={<Interns />}
           />
 
+          {/* Status Page */}
           <Route
             path="/status"
             element={<StatusPage />}
           />
 
+          {/* Update Student */}
+          <Route
+            path="/update"
+            element={<UpdateStudent />}
+          />
+
+          {/* Completion Page */}
           <Route
             path="/completed"
             element={<CompletionPage />}
           />
 
-          {/* Fallback Route */}
+          {/* Page Not Found */}
           <Route
             path="*"
             element={

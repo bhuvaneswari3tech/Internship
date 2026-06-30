@@ -1,6 +1,4 @@
 const internData = {
-<<<<<<< HEAD
-=======
   interns: [
     {
       id: 1,
@@ -64,39 +62,16 @@ const internData = {
     }
   ],
 
->>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
   tasks: [
     {
       id: 1,
       title: "Create React Registration Form",
-<<<<<<< HEAD
-      progress: 100
-=======
       progress: 100,
       internId: 1
->>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
     },
     {
       id: 2,
       title: "Connect PostgreSQL Database",
-<<<<<<< HEAD
-      progress: 80
-    },
-    {
-      id: 3,
-      title: "Build Student Dashboard",
-      progress: 60
-    },
-    {
-      id: 4,
-      title: "Develop Status Page",
-      progress: 40
-    },
-    {
-      id: 5,
-      title: "Generate Completion Certificate",
-      progress: 20
-=======
       progress: 100,
       internId: 2
     },
@@ -117,7 +92,6 @@ const internData = {
       title: "Status Update Page",
       progress: 10,
       internId: 5
->>>>>>> 98c3e104759276d1d62de871bde4bac723a8958c
     }
   ]
 };
