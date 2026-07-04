@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 /* ===========================
    INTERN REGISTRATION
 =========================== */
-app.post("/api/interns/register", async (req, res) => {
+app.post("/interns/register", async (req, res) => {
   try {
     const {
       full_name,
@@ -34,7 +34,7 @@ app.post("/api/interns/register", async (req, res) => {
     } = req.body;
 
     const result = await pool.query(
-      `INSERT INTO interns
+      `INSERT INTO public.interns
       (full_name,email,contact_number,college_name,degree,branch,year,status)
       VALUES($1,$2,$3,$4,$5,$6,$7,$8)
       RETURNING *`,
@@ -68,10 +68,10 @@ app.post("/api/interns/register", async (req, res) => {
 /* ===========================
    GET ALL INTERNS
 =========================== */
-app.get("/api/interns", async (req, res) => {
+app.get("/interns", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT * FROM interns ORDER BY intern_id DESC"
+      "SELECT * FROM public.interns ORDER BY intern_id DESC"
     );
 
     res.json({
@@ -91,13 +91,13 @@ app.get("/api/interns", async (req, res) => {
 /* ===========================
    GET SINGLE INTERN + HISTORY
 =========================== */
-app.get("/api/intern/:email", async (req, res) => {
+app.get("/intern/:email", async (req, res) => {
   try {
     const { email } = req.params;
 
     const internResult = await pool.query(
       `SELECT *
-       FROM interns
+       FROM public.interns
        WHERE email=$1`,
       [email]
     );
@@ -138,13 +138,13 @@ app.get("/api/intern/:email", async (req, res) => {
 /* ===========================
    ALLOCATE INTERN
 =========================== */
-app.put("/api/interns/:id/allocate", async (req, res) => {
+app.put("/interns/:id/allocate", async (req, res) => {
   try {
     const { id } = req.params;
     const { domain } = req.body;
 
     const result = await pool.query(
-      `UPDATE interns
+      `UPDATE public.interns
        SET domain=$1,
            status='Active'
        WHERE intern_id=$2
@@ -178,7 +178,7 @@ app.put("/api/interns/:id/allocate", async (req, res) => {
 /* ===========================
    UPDATE TASK
 =========================== */
-app.post("/api/update-task", async (req, res) => {
+app.post("/update-task", async (req, res) => {
   try {
     const {
       intern_id,
@@ -189,7 +189,7 @@ app.post("/api/update-task", async (req, res) => {
     } = req.body;
 
     await pool.query(
-      `UPDATE interns
+      `UPDATE public.interns
        SET task=$1,
            completion=$2,
            status=$3,
@@ -205,7 +205,7 @@ app.post("/api/update-task", async (req, res) => {
     );
 
     await pool.query(
-      `INSERT INTO task_history
+      `INSERT INTO public.task_history
       (intern_id,task,overview,completion,status,task_date,task_time)
       VALUES($1,$2,$3,$4,$5,CURRENT_DATE,CURRENT_TIME)`,
       [
