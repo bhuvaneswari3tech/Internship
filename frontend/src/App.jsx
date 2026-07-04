@@ -3,13 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-import InternRegistration from "./components/InternRegistration";
+import InternRegistration from "./components/internRegistration";
 import InternAllocation from "./components/internAllocation";
-import InternDashboard from "./components/InternDashboard";
+import InternDashboard from "./components/internDashboard";
 import StudentList from "./components/StudentList";
-import Interns from "./components/Interns";
-import StatusPage from "./components/StatusPage";
-import CompletionPage from "./components/CompletionPage";
+import Interns from "./components/interns";
+import StatusPage from "./components/statusPage";
+import CompletionPage from "./components/completionPage";
 import UpdateStudent from "./components/UpdateStudent";
 
 function App() {
