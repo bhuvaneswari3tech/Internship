@@ -6,21 +6,18 @@ function InternDashboard() {
   const location = useLocation();
   const email = location.state?.email;
 
-  const [intern, setIntern] = useState(null);
+  const [intern, setIntern] = useState({});
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!email) {
-      console.log("No email received");
       setLoading(false);
       return;
     }
 
     const fetchDashboard = async () => {
       try {
-        console.log("Fetching dashboard for:", email);
-
         const response = await fetch(
           `http://localhost:5001/api/intern/${encodeURIComponent(email)}`
         );
@@ -30,19 +27,16 @@ function InternDashboard() {
         console.log("Dashboard Response:", result);
 
         if (response.ok && result.success) {
-          setIntern(result.data);
-
-          if (Array.isArray(result.history)) {
-            setHistory(result.history);
-          } else {
-            setHistory([]);
-          }
+          setIntern(result.data || {});
+          setHistory(result.history || []);
         } else {
-          setIntern(null);
+          setIntern({});
+          setHistory([]);
         }
       } catch (err) {
         console.error(err);
-        setIntern(null);
+        setIntern({});
+        setHistory([]);
       } finally {
         setLoading(false);
       }
@@ -54,7 +48,7 @@ function InternDashboard() {
   if (loading) {
     return (
       <div className="dashboard-container">
-        <h2 style={{ textAlign: "center" }}>Loading...</h2>
+        <h2>Loading...</h2>
       </div>
     );
   }
@@ -62,19 +56,7 @@ function InternDashboard() {
   if (!email) {
     return (
       <div className="dashboard-container">
-        <h2 style={{ textAlign: "center" }}>
-          Email not received.
-        </h2>
-      </div>
-    );
-  }
-
-  if (!intern) {
-    return (
-      <div className="dashboard-container">
-        <h2 style={{ textAlign: "center" }}>
-          No Intern Found
-        </h2>
+        <h2>Email not received.</h2>
       </div>
     );
   }
@@ -87,24 +69,28 @@ function InternDashboard() {
         <p>Intern Dashboard</p>
       </div>
 
+      {/* Statistics */}
+
       <div className="stats-grid">
 
         <div className="stat-card">
           <h3>Completion</h3>
-          <span>{intern.completion ?? 0}%</span>
+          <span>{intern?.completion ?? 0}%</span>
         </div>
 
         <div className="stat-card">
           <h3>Status</h3>
-          <span>{intern.status}</span>
+          <span>{intern?.status ?? "Pending"}</span>
         </div>
 
         <div className="stat-card">
           <h3>Domain</h3>
-          <span>{intern.domain}</span>
+          <span>{intern?.domain ?? "Not Assigned"}</span>
         </div>
 
       </div>
+
+      {/* Student Information */}
 
       <div className="dashboard-card">
 
@@ -112,23 +98,27 @@ function InternDashboard() {
 
         <div className="details-grid">
 
-          <p><strong>Name :</strong> {intern.full_name}</p>
+          <p><strong>Name :</strong> {intern?.full_name}</p>
 
-          <p><strong>Email :</strong> {intern.email}</p>
+          <p><strong>Email :</strong> {intern?.email}</p>
 
-          <p><strong>College :</strong> {intern.college_name}</p>
+          <p><strong>Contact :</strong> {intern?.contact_number}</p>
 
-          <p><strong>Degree :</strong> {intern.degree}</p>
+          <p><strong>College :</strong> {intern?.college_name}</p>
 
-          <p><strong>Branch :</strong> {intern.branch}</p>
+          <p><strong>Degree :</strong> {intern?.degree}</p>
 
-          <p><strong>Year :</strong> {intern.year}</p>
+          <p><strong>Branch :</strong> {intern?.branch}</p>
 
-          <p><strong>Domain :</strong> {intern.domain}</p>
+          <p><strong>Year :</strong> {intern?.year}</p>
+
+          <p><strong>Domain :</strong> {intern?.domain ?? "Not Assigned"}</p>
 
         </div>
 
       </div>
+
+      {/* Internship Details */}
 
       <div className="dashboard-card">
 
@@ -136,33 +126,45 @@ function InternDashboard() {
 
         <div className="details-grid">
 
-          <p><strong>Task :</strong> {intern.task || "No Task Assigned"}</p>
+          <p><strong>Task :</strong> {intern?.task ?? "No Task Assigned"}</p>
 
-          <p><strong>Completion :</strong> {intern.completion ?? 0}%</p>
+          <p><strong>Completion :</strong> {intern?.completion ?? 0}%</p>
 
-          <p><strong>Status :</strong> {intern.status}</p>
+          <p><strong>Status :</strong> {intern?.status ?? "Pending"}</p>
 
-          <p><strong>Date :</strong> {new Date().toLocaleDateString()}</p>
+          <p>
+            <strong>Date :</strong>{" "}
+            {intern?.task_date
+              ? new Date(intern.task_date).toLocaleDateString()
+              : "N/A"}
+          </p>
 
-          <p><strong>Time :</strong> {new Date().toLocaleTimeString()}</p>
+          <p>
+            <strong>Time :</strong>{" "}
+            {intern?.task_time ?? "N/A"}
+          </p>
 
         </div>
 
       </div>
+
+      {/* Task History */}
 
       <div className="dashboard-card">
 
         <h2>Task Overview History</h2>
 
         {history.length === 0 ? (
-          <div className="overview-box">
-            No task history available.
-          </div>
-        ) : (
-          history.map((item, index) => (
-            <div key={index} className="overview-box">
 
-              <h3>Update {index + 1}</h3>
+          <p>No task history available.</p>
+
+        ) : (
+
+          history.map((item) => (
+
+            <div key={item.history_id} className="overview-box">
+
+              <h3>Task Update</h3>
 
               <p><strong>Task :</strong> {item.task}</p>
 
@@ -174,19 +176,31 @@ function InternDashboard() {
 
               <p>
                 <strong>Date :</strong>{" "}
-                {new Date(item.updated_at).toLocaleDateString()}
+                {item.task_date
+                  ? new Date(item.task_date).toLocaleDateString()
+                  : item.updated_at
+                  ? new Date(item.updated_at).toLocaleDateString()
+                  : "N/A"}
               </p>
 
               <p>
                 <strong>Time :</strong>{" "}
-                {new Date(item.updated_at).toLocaleTimeString()}
+                {item.task_time
+                  ? item.task_time
+                  : item.updated_at
+                  ? new Date(item.updated_at).toLocaleTimeString()
+                  : "N/A"}
               </p>
 
             </div>
+
           ))
+
         )}
 
       </div>
+
+      {/* Progress */}
 
       <div className="dashboard-card">
 
@@ -197,13 +211,13 @@ function InternDashboard() {
           <div
             className="progress-fill"
             style={{
-              width: `${intern.completion ?? 0}%`,
+              width: `${intern?.completion ?? 0}%`,
             }}
           ></div>
 
         </div>
 
-        <p>{intern.completion ?? 0}% Completed</p>
+        <p>{intern?.completion ?? 0}% Completed</p>
 
       </div>
 

@@ -33,12 +33,10 @@ app.post("/api/interns/register", async (req, res) => {
       status,
     } = req.body;
 
-    const internStatus = status || "Pending";
-
     const result = await pool.query(
       `INSERT INTO interns
-      (full_name, email, contact_number, college_name, degree, branch, year, status)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+      (full_name,email,contact_number,college_name,degree,branch,year,status)
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8)
       RETURNING *`,
       [
         full_name,
@@ -48,7 +46,7 @@ app.post("/api/interns/register", async (req, res) => {
         degree,
         branch,
         year,
-        internStatus,
+        status || "Pending",
       ]
     );
 
@@ -59,13 +57,16 @@ app.post("/api/interns/register", async (req, res) => {
     });
 
   } catch (err) {
-    console.error("REGISTER ERROR:", err.message);
-    res.status(500).json({ success: false, message: err.message });
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 });
 
 /* ===========================
-   GET ALL INTERNS (FIXED)
+   GET ALL INTERNS
 =========================== */
 app.get("/api/interns", async (req, res) => {
   try {
@@ -73,45 +74,64 @@ app.get("/api/interns", async (req, res) => {
       "SELECT * FROM interns ORDER BY intern_id DESC"
     );
 
-    res.status(200).json({
+    res.json({
       success: true,
-      count: result.rows.length,
       data: result.rows,
     });
 
   } catch (err) {
-    console.error("INTERNS ERROR:", err.message);
-    res.status(500).json({ success: false, message: err.message });
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 });
 
 /* ===========================
-   GET SINGLE INTERN (FOR DASHBOARD)
+   GET SINGLE INTERN + HISTORY
 =========================== */
 app.get("/api/intern/:email", async (req, res) => {
   try {
     const { email } = req.params;
 
-    const result = await pool.query(
-      "SELECT * FROM interns WHERE email = $1",
+    const internResult = await pool.query(
+      `SELECT *
+       FROM interns
+       WHERE email=$1`,
       [email]
     );
 
-    if (result.rows.length === 0) {
+    if (internResult.rows.length === 0) {
       return res.status(404).json({
         success: false,
         message: "Intern not found",
       });
     }
 
+    const intern = internResult.rows[0];
+
+    const historyResult = await pool.query(
+      `SELECT *
+       FROM task_history
+       WHERE intern_id=$1
+       ORDER BY history_id DESC`,
+      [intern.intern_id]
+    );
+
     res.json({
       success: true,
-      data: result.rows[0],
+      data: intern,
+      history: historyResult.rows,
     });
 
   } catch (err) {
-    console.error("SINGLE INTERN ERROR:", err.message);
-    res.status(500).json({ success: false, message: err.message });
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 });
 
@@ -125,9 +145,9 @@ app.put("/api/interns/:id/allocate", async (req, res) => {
 
     const result = await pool.query(
       `UPDATE interns
-       SET domain = $1,
-           status = 'Active'
-       WHERE intern_id = $2
+       SET domain=$1,
+           status='Active'
+       WHERE intern_id=$2
        RETURNING *`,
       [domain, id]
     );
@@ -146,63 +166,76 @@ app.put("/api/interns/:id/allocate", async (req, res) => {
     });
 
   } catch (err) {
-    console.error("ALLOCATION ERROR:", err.message);
-    res.status(500).json({ success: false, message: err.message });
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 });
 
 /* ===========================
-   TASKS
+   UPDATE TASK
 =========================== */
-app.get("/api/tasks", async (req, res) => {
+app.post("/api/update-task", async (req, res) => {
   try {
-    const result = await pool.query(
-      "SELECT * FROM tasks ORDER BY task_id ASC"
+    const {
+      intern_id,
+      task,
+      overview,
+      completion,
+      status,
+    } = req.body;
+
+    await pool.query(
+      `UPDATE interns
+       SET task=$1,
+           completion=$2,
+           status=$3,
+           task_date=CURRENT_DATE,
+           task_time=CURRENT_TIME
+       WHERE intern_id=$4`,
+      [
+        task,
+        completion,
+        status,
+        intern_id,
+      ]
     );
 
-    res.json({ success: true, data: result.rows });
-
-  } catch (err) {
-    console.error("TASK ERROR:", err.message);
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
-
-app.put("/api/tasks/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { status } = req.body;
-
-    const result = await pool.query(
-      `UPDATE tasks
-       SET status = $1
-       WHERE task_id = $2
-       RETURNING *`,
-      [status, id]
+    await pool.query(
+      `INSERT INTO task_history
+      (intern_id,task,overview,completion,status,task_date,task_time)
+      VALUES($1,$2,$3,$4,$5,CURRENT_DATE,CURRENT_TIME)`,
+      [
+        intern_id,
+        task,
+        overview,
+        completion,
+        status,
+      ]
     );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "Task Not Found",
-      });
-    }
 
     res.json({
       success: true,
       message: "Task Updated Successfully",
-      data: result.rows[0],
     });
 
   } catch (err) {
-    console.error("UPDATE TASK ERROR:", err.message);
-    res.status(500).json({ success: false, message: err.message });
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 });
 
 /* ===========================
-   SERVER START
+   SERVER
 =========================== */
+
 const PORT = 5001;
 
 app.listen(PORT, () => {
