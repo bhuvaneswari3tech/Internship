@@ -7,7 +7,7 @@ import InternRegistration from "./components/internRegistration";
 import InternAllocation from "./components/internAllocation";
 import InternDashboard from "./components/internDashboard";
 import StudentList from "./components/StudentList";
-import Interns from "./components/interns";
+import Interns from "./components/Interns";
 import StatusPage from "./components/statusPage";
 import CompletionPage from "./components/completionPage";
 import UpdateStudent from "./components/UpdateStudent";
