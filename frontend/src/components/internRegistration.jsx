@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import handleSubmit from "../handlers/handleSubmit";
 import logo from "../assets/arinfotek_logo.png";
-import "./InternRegistration.css";
+import "./internRegistration.css";
 
 function InternRegistration() {
   const navigate = useNavigate();
