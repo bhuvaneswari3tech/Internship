@@ -11,7 +11,7 @@ exports.registerIntern = async (req, res) => {
     } = req.body;
 
     const result = await db.query(
-      `INSERT INTO internships
+      `INSERT INTO public.internships
       (student_name,email,phone,college_name,domain)
       VALUES($1,$2,$3,$4,$5)
       RETURNING *`,
@@ -27,7 +27,7 @@ exports.registerIntern = async (req, res) => {
 
 exports.getAllInterns = async (req,res)=>{
   const result = await db.query(
-    "SELECT * FROM internships"
+    "SELECT * FROM public.internships"
   );
 
   res.json(result.rows);
